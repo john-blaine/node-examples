@@ -5,6 +5,10 @@ const printComments = (name, email, comment) => {
     console.log(message);
 }
 
+function printError(error) {
+    console.error(error.message);
+}
+
 function getComments(testId) {
     try {
         https.get(`https://jsonplaceholder.typicode.com/comments?postId=${testId}`, (res) => {
@@ -26,7 +30,7 @@ function getComments(testId) {
     
         request.on('error', error => console.error(`Problem with request: ${error.message}`))
     } catch (error) {
-        console.error(error.message);
+        printError(error);
     }
 }
 
