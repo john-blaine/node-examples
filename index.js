@@ -6,22 +6,28 @@ const printComments = (name, email, comment) => {
 }
 
 function getComments(testId) {
-    https.get(`https://jsonplaceholder.typicode.com/comments?postId=${testId}`, (res) => {
-        console.log('statusCode:', res.statusCode);
-    
-        let body = '';
-    
-        res.on('data', data => {
-            body += data.toString();
+    try {
+        https.get(`https://jsonplaceholder.typicode.com/comments?postId=${testId}`, (res) => {
+            console.log('statusCode:', res.statusCode);
+        
+            let body = '';
+        
+            res.on('data', data => {
+                body += data.toString();
+            });
+        
+            res.on('end', () => {
+                body = JSON.parse(body);
+                for (var i = 0; i < body.length; i++) {
+                  printComments(body[i].name, body[i].email, body[i].body);
+                }
+            })
         });
     
-        res.on('end', () => {
-            body = JSON.parse(body);
-            for (var i = 0; i < body.length; i++) {
-              printComments(body[i].name, body[i].email, body[i].body);
-            }
-        })
-    });
+        request.on('error', error => console.error(`Problem with request: ${error.message}`))
+    } catch (error) {
+        console.error(error.message);
+    }
 }
 
 const userIds = process.argv.slice(2);
