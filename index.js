@@ -27,8 +27,8 @@ function getComments(postId) {
                     }
                 })
             } else {
-                const message = `There was an error getting the comments for the post with id: ${postId} \
-                (Status code: ${res.statusCode}`;
+                const message = `There was an error getting the comments for the post with id: ${postId}`
+                + ` (Status code: ${res.statusCode}`;
 
                 const statusCodeError = new Error(message);
                 printError(statusCodeError);
