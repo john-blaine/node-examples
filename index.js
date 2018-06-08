@@ -10,6 +10,16 @@ printComments('John', 'john.alan.blaine@gmail.com', 'This is a comment');
 
 https.get(`https://jsonplaceholder.typicode.com/posts/${testId}`, (res) => {
     console.log('statusCode:', res.statusCode);
-    console.dir(res);
-})
+
+    let body = '';
+
+    res.on('data', data => {
+        body += data.toString();
+    });
+
+    res.on('end', () => {
+        body = JSON.parse(body);
+        console.log(body.body);
+    })
+});
 
