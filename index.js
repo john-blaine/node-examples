@@ -24,7 +24,7 @@ function getComments(testId) {
     });
 }
 
-const userIds = [1, 2, 3, 4, 5];
+const userIds = process.argv.slice(2);
 
 userIds.forEach(getComments);
 
