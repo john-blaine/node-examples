@@ -24,5 +24,8 @@ function getComments(testId) {
     });
 }
 
+const userIds = [1, 2, 3, 4, 5];
+
+userIds.forEach(getComments);
 
 
