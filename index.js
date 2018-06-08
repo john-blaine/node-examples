@@ -1,6 +1,4 @@
-console.log('Hello world');
-console.error('Error 404');
-console.dir({name: 'John', age: 33});
+const https = require('https');
 
 const printComments = (name, email, comment) => {
     const message = `User ${name} with the email ${email} left the following comment:\n${comment}`;
@@ -8,3 +6,8 @@ const printComments = (name, email, comment) => {
 }
 
 printComments('John', 'john.alan.blaine@gmail.com', 'This is a comment');
+
+https.get('https://jsonplaceholder.typicode.com/posts/1', (res) => {
+    console.log('statusCode:', res.statusCode);
+})
+
