@@ -6,9 +6,7 @@ const printComments = (name, email, comment) => {
     console.log(message);
 }
 
-printComments('John', 'john.alan.blaine@gmail.com', 'This is a comment');
-
-https.get(`https://jsonplaceholder.typicode.com/posts/${testId}`, (res) => {
+https.get(`https://jsonplaceholder.typicode.com/comments?postId=${testId}`, (res) => {
     console.log('statusCode:', res.statusCode);
 
     let body = '';
@@ -19,7 +17,9 @@ https.get(`https://jsonplaceholder.typicode.com/posts/${testId}`, (res) => {
 
     res.on('end', () => {
         body = JSON.parse(body);
-        console.log(body.body);
+        for (var i = 0; i < body.length; i++) {
+          printComments(body[i].name, body[i].email, body[i].body);
+        }
     })
 });
 
