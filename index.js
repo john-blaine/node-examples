@@ -9,23 +9,30 @@ function printError(error) {
     console.error(error.message);
 }
 
-function getComments(testId) {
+function getComments(postId) {
     try {
-        https.get(`https://jsonplaceholder.typicode.com/comments?postId=${testId}`, (res) => {
-            console.log('statusCode:', res.statusCode);
+        const request = https.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`, (res) => {
+            if (res.statusCode === 200) {
         
-            let body = '';
+                let body = '';
         
-            res.on('data', data => {
-                body += data.toString();
-            });
-        
-            res.on('end', () => {
-                body = JSON.parse(body);
-                for (var i = 0; i < body.length; i++) {
-                  printComments(body[i].name, body[i].email, body[i].body);
-                }
-            })
+                res.on('data', data => {
+                    body += data.toString();
+                });
+            
+                res.on('end', () => {
+                    body = JSON.parse(body);
+                    for (var i = 0; i < body.length; i++) {
+                      printComments(body[i].name, body[i].email, body[i].body);
+                    }
+                })
+            } else {
+                const message = `There was an error getting the comments for the post with id: ${postId} \
+                (Status code: ${res.statusCode}`;
+
+                const statusCodeError = new Error(message);
+                printError(statusCodeError);
+            }
         });
     
         request.on('error', error => console.error(`Problem with request: ${error.message}`))
@@ -34,8 +41,8 @@ function getComments(testId) {
     }
 }
 
-const userIds = process.argv.slice(2);
+const postIds = process.argv.slice(2);
 
-userIds.forEach(getComments);
+postIds.forEach(getComments);
 
 
