@@ -9,7 +9,7 @@ const printTemp = (city, temp) => {
 }
 
 const getWeather = (zipOrCity) => {
-  const request = http.get(`http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=${apiKey}`, (res) => {
+  const request = http.get(`http://api.openweathermap.org/data/2.5/find?q=London&units=imperial&APPID=${apiKey}`, (res) => {
     let body = '';
 
     res.on('data', data => {
