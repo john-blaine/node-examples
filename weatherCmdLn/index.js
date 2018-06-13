@@ -17,11 +17,10 @@ const getWeather = (zipOrCity) => {
     })
 
     res.on('end', () => {
-        console.log(body);
+        body = JSON.parse(body);
+        printTemp(body.list[0].name, body.list[0].main.temp);
     })
   });
-
-
 };
 
 getWeather(process.argv[2]);
