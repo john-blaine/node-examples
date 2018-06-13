@@ -1,6 +1,7 @@
-const https = require('https');
+require('dotenv').config();
+const http = require('http');
 
-const apiKey = process.API_KEY;
+const apiKey = process.env.API_KEY;
 
 const printTemp = (city, temp) => {
     const message = `Current temperature in ${city} is ${temp}F`;
@@ -8,7 +9,19 @@ const printTemp = (city, temp) => {
 }
 
 const getWeather = (zipOrCity) => {
-  const request = https.get(`http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=${apiKey}`);
+  const request = http.get(`http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=${apiKey}`, (res) => {
+    let body = '';
+
+    res.on('data', data => {
+        body += data.toString();
+    })
+
+    res.on('end', () => {
+        console.log(body);
+    })
+  });
+
+
 };
 
 getWeather(process.argv[2]);
