@@ -15,12 +15,7 @@ const getWeather = (zipOrCity) => {
   if (zipOrCity.match(/(^\d{5}$)/gm)) {
     query = `http://api.openweathermap.org/data/2.5/find?zip=${zipOrCity}&units=imperial&APPID=${apiKey}`;
   } else {
-    zipOrCity = zipOrCity.split(' ');
-    if (zipOrCity.length ==! 1) {
-      query = `http://api.openweathermap.org/data/2.5/find?q=${zipOrCity[0]},${zipOrCity[1]}&units=imperial&APPID=${apiKey}`;
-    } else {
-      query = `http://api.openweathermap.org/data/2.5/find?q=${zipOrCity[0]}&units=imperial&APPID=${apiKey}`;
-    }
+    query = `http://api.openweathermap.org/data/2.5/find?q=${zipOrCity}&units=imperial&APPID=${apiKey}`;
   }
 
   const request = http.get(query, (res) => {
