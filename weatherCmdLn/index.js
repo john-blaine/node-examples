@@ -10,13 +10,20 @@ const printTemp = (city, temp) => {
 
 const getWeather = (zipOrCity) => {
 
+  let query;
+
   if (zipOrCity.match(/(^\d{5}$)/gm)) {
-    console.log('Matched');
+    query = `http://api.openweathermap.org/data/2.5/find?zip=${zipOrCity}&units=imperial&APPID=${apiKey}`;
   } else {
-    console.log('No match');
+    zipOrCity = zipOrCity.split(' ');
+    if (zipOrCity.length ==! 1) {
+      query = `http://api.openweathermap.org/data/2.5/find?q=${zipOrCity[0]},${zipOrCity[1]}&units=imperial&APPID=${apiKey}`;
+    } else {
+      query = `http://api.openweathermap.org/data/2.5/find?q=${zipOrCity[0]}&units=imperial&APPID=${apiKey}`;
+    }
   }
 
-  const request = http.get(`http://api.openweathermap.org/data/2.5/find?q=London&units=imperial&APPID=${apiKey}`, (res) => {
+  const request = http.get(query, (res) => {
     let body = '';
 
     res.on('data', data => {
