@@ -31,8 +31,9 @@ const getWeather = (zipOrCity, apiKey) => {
             try {
               printTemp(body.name, Math.round(body.main.temp * 10) / 10);
             } catch (error) {
-              console.error(`Unexpected response. Error encountered:${error} \n`
-              + `Response received: ${JSON.stringify(body)}`);
+              console.error(`Error encountered:\n`
+              + `Status Code: ${body.cod} \n`
+              + `Response Message: ${body.message}`);
             }
           })
         });
