@@ -31,11 +31,16 @@ const getWeather = (zipOrCity) => {
       
           res.on('end', () => {
             body = JSON.parse(body);
-            printTemp(body.name, Math.round(body.main.temp * 10) / 10);
+            try {
+              printTemp(body.name, Math.round(body.main.temp * 10) / 10);
+            } catch (error) {
+              console.error(`Unexpected response. Error encountered:${error} \n`
+              + `Response received: ${JSON.stringify(body)}`);
+            }
           })
         });
 
-        request.on('error', error => console.error(`Problem with request: ${error.message}`))
+        request.on('error', error => console.error(`Problem with request: ${error.message}`));
     } catch (error) {
         printError(error);
     }
