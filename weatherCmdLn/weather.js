@@ -1,7 +1,4 @@
-require('dotenv').config();
 const http = require('http');
-
-const apiKey = process.env.API_KEY;
 
 const printTemp = (city, temp) => {
   const message = `Current temperature in ${city} is ${temp}F`;
@@ -12,7 +9,7 @@ const printError = (error) => {
     console.error(error.message);
 }
 
-const getWeather = (zipOrCity) => {
+const getWeather = (zipOrCity, apiKey) => {
     try {
         let query;
 
